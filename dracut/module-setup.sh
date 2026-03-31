@@ -92,6 +92,41 @@ install() {
         esac
     done
 
+    # Include /etc/pki/tls/certs/ca-bundle.crt which is required by python3-requests
+    # **TODO** >>>>>>
+
+    # - should look through all installed *.py files (above) and check whether there's certificate file required;
+    #         either *.pem or *.crt
+
+    # - reference implementation from dracuts url-lib module:
+
+#    for _dir in $libdirs; do                                                                                            
+#        [[ -d ${dracutsysrootdir-}$_dir ]] || continue                                                                  
+#        for _lib in "${dracutsysrootdir-}$_dir"/libcurl.so.* "${dracutsysrootdir-}$_dir"/libcrypto.so.*; do             
+#            [[ -e $_lib ]] || continue                                                                                  
+#            if ! [[ $_nssckbi ]]; then                                                                                  
+#                read -r -d '' _nssckbi < <(grep -F --binary-files=text -z libnssckbi "$_lib")                           
+#            fi                                                                                                          
+#            read -r -d '' _crt < <(grep -E --binary-files=text -z "\.(pem|crt)" "$_lib" | sed 's/\x0//g')               
+#            [[ $_crt ]] || continue                                                                                     
+#            [[ $_crt == /*/* ]] || continue                                                                             
+#            if [[ -e $_crt ]]; then                                                                                     
+#                _crts="$_crts $_crt"                                                                                    
+#                _found=1                                                                                                
+#            fi                                                                                                          
+#        done                                                                                                            
+#    done                                                                                                                
+#    if [[ $_found ]] && [[ -n $_crts ]]; then                                                                           
+#        for _crt in $_crts; do                                                                                          
+#            if ! inst "${_crt#"${dracutsysrootdir-}"}"; then                                                            
+#                dwarn "Couldn't install '$_crt' SSL CA cert bundle; HTTPS might not work."                              
+#                continue                                                                                                
+#            fi                                                                                                          
+#        done                                                                                                            
+#    fi
+#
+    # <<<<<< **TODO**
+
     # support for specific architectures
     case "$(uname -m)" in
         s390*)
